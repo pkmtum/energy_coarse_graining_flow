@@ -1,0 +1,45 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ecg"
+version = "0.0.1"
+description = "Energy-based Coarse-graining with Flows"
+readme = "README.md"
+license = {"text" = "Apache-2.0"}
+authors = [
+  { name = "Maximilian Stupp", email = "maximilian.stupp@tum.de" }
+]
+requires-python = ">=3.10"
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "License :: OSI Approved :: Apache Software License",
+  "Operating System :: POSIX :: Linux",
+  "Topic :: Scientific/Engineering",
+  "Intended Audience :: Science/Research",
+  "Intended Audience :: Developers",
+]
+
+# --- Dependencies ---
+dependencies = [
+  "jax<=0.6.2",
+  "flowjax>=17.2.0",
+  "chemtrain[all] @ git+https://github.com/tummfm/chemtrain.git@jax-version",
+]
+
+[project.optional-dependencies]
+all = [
+  "matplotlib",
+  "seaborn",
+]
+
+[project.urls]
+homepage = "https://github.com/pkmtum/energy_coarse_graining_flow"
+
+[tool.setuptools.packages.find]
+namespaces = false
+include = ["ecg"]
