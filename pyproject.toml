@@ -7,7 +7,7 @@ name = "ecg"
 version = "0.0.1"
 description = "Energy-based Coarse-graining with Flows"
 readme = "README.md"
-license = {"text" = "Apache-2.0"}
+license = { text = "Apache 2.0" }
 authors = [
   { name = "Maximilian Stupp", email = "maximilian.stupp@tum.de" }
 ]
