@@ -8,7 +8,7 @@ from flowjax import flows
 from flowjax.bijections import Chain, Exp, Indexed, Permute, \
                                RationalQuadraticSpline
 
-from ecg.bijections import SignFlipIndexed, StochasticLinearBijection, \
+from ecg.bijections import SignFlip, StochasticLinearBijection, \
                            StochasticLinearBijectionPerAtom
 from ecg.distributions import JointDistribution, JointModelTransformed, \
                               MLPConditionalNormal, TruncatedNormal
@@ -115,7 +115,7 @@ def initialize_model(dimensions: Dimensions,
     if restrain_idxs is not None:
         indexed_shape = jnp.asarray(restrain_idxs).shape
         indexed_bijection = Indexed(Chain([Exp(indexed_shape),
-                                        SignFlipIndexed(restrain_idxs)]),
+                                        SignFlip(indexed_shape)]),
                                     idxs=restrain_idxs,
                                     shape=(dimensions.x_dim,))
         bijections.append(paramax.non_trainable(indexed_bijection))

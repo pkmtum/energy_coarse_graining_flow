@@ -41,7 +41,7 @@ Phi_init =  jnp.insert(jnp.eye(dimensions.num_atoms-2), 2,
 init_z_bias_idx = jnp.array([15, 16, 17, 0, 1, 2, 3, 4, 5, 6, 18, 19, 20, 7, 8,
                     9, 10, 11, 12, 13, 14, 21, 22, 23], dtype=jnp.int32)
 # Restrain CA_z coordinate to be negative
-restrain_idxs = jnp.array([-9], dtype=jnp.int32)
+restrain_idxs = jnp.array([9], dtype=jnp.int32)
 
 layers=8
 nn_depth=4
