@@ -20,7 +20,7 @@ The training examples can be found in:
 - [example_gmm.py](examples/example_gmm.py)
 - [example_aldp.py](examples/example_aldp.py)
 
-Training the flow for the DW and GMM example takes a few minutes, while the alanine dipeptide example takes around 12 hours on an NVIDIA H100. Trained models will be provided in [pretrained_ecg_aldp_model.eqx](pretrained_models/ecg_aldp) (coming soon).
+Training the flow for the DW and GMM example takes a few minutes, while the alanine dipeptide example takes around 12 hours on an NVIDIA H100. Trained models for different beta values for aldp can be downloaded from the [Google Drive link](https://drive.google.com/drive/folders/1cZBMiqBnL34uWclKzz-2l2SuXK_L3enW?usp=sharing) below.
 
 ## Data sets
 The data sets for the double-well and alanine dipeptide can be downloaded from the following Google Drive link:</br>[https://drive.google.com/drive/folders/1cZBMiqBnL34uWclKzz-2l2SuXK_L3enW?usp=sharing](https://drive.google.com/drive/folders/1cZBMiqBnL34uWclKzz-2l2SuXK_L3enW?usp=sharing).</br> After downloading, the reference files should be moved into the corresponding datasets folder for [double-well](datasets/dw) and

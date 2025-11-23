@@ -286,21 +286,15 @@ class AlanineDipeptide(Target):
         ref_samples = self.ref_samples(beta)
         ref_dihedral_angles = self.dihedral_angles(ref_samples)
 
-        plot_marginals(samples,
-                       ref_samples,
-                       bins=bins,
-                       axis_label_pattern=r'$x_{z_{%d}}$',
-                       save_name=save_name,
-                       folder_name=folder_name and folder_name+ \
-                                    'marginals/')
-
         plot_rama([ref_dihedral_angles, dihedral_angles],
+                  bins=bins,
                   titles=['Predicted', 'Reference'],
                   save_name=save_name,
                   folder_name=folder_name and folder_name+ \
                                'dihedrals/')
 
         plot_1d_dihedrals([ref_dihedral_angles, dihedral_angles],
+                          bins=bins,
                           save_name=save_name,
                           folder_name=folder_name and folder_name+ \
                                'dihedrals/')

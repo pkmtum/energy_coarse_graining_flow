@@ -81,7 +81,6 @@ create_output_dirs(
     save_params_path,
     subdirs=['dihedrals',
              'losses',
-             'marginals',
              'observables',
              'transformations']
 )

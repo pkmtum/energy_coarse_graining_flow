@@ -637,6 +637,7 @@ def annotate_alanine_histrogram(axis=None):
 
 
 def plot_rama(list_angles: list[Array],
+              bins: int = 60,
               titles: Sequence[str] | None = None,
               cmap: clr.Colormap | None = None,
               save_name: str | None = None,
@@ -659,7 +660,7 @@ def plot_rama(list_angles: list[Array],
         mask = np.isfinite(list_angles[i]).all(axis=1)
         angles = list_angles[i][mask]
         h, x_edges, y_edges  = np.histogram2d(
-            angles[:, 0], angles[:, 1], bins=60, density=True)
+            angles[:, 0], angles[:, 1], bins=bins, density=True)
         h_masked = np.where(h == 0, np.nan, h)
         x, y = np.meshgrid(x_edges, y_edges)
         images.append(axs[i].pcolormesh(x,y,h_masked.T, cmap=cmap))
