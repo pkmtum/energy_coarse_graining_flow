@@ -53,10 +53,10 @@ Please cite our paper if you use this code in your own work:
   title = {Energy-Based Coarse-Graining in Molecular Dynamics: A Flow-Based Framework without Data},
   author = {Stupp, Maximilian and Koutsourelakis, P. S.},
   journal={Journal of Chemical Theory and Computation},
-  volume = {0},
-  number = {0},
-  pages = {null},
-  year = {2025},
+  volume = {22},
+  number = {1},
+  pages = {181-200},
+  year = {2026},
   doi = {10.1021/acs.jctc.5c01504}
 }
 ```
