@@ -161,7 +161,7 @@ def init_adaptive_tempering(
     init_beta: Float,
     get_log_weights: Optional[Callable[[PyTree, PRNGKeyArray, Float], \
                             Tuple[Array, Array, Array]]] | None = None,
-    detla_kl: float = 1.0,
+    delta_kl: float = 1.0,
     delta_beta: Float = 1e-3,
     **unused_kwargs,
     ) -> Tuple[Callable[[PyTree, PRNGKeyArray, Float, Float], \
@@ -233,7 +233,7 @@ def init_adaptive_tempering(
 
         def _cond_fn(carry):
             _, _, kl_increase = carry
-            return kl_increase > detla_kl
+            return kl_increase > delta_kl
 
         final_carry = lax.while_loop(_cond_fn, _body_fn, init_carry)
 
