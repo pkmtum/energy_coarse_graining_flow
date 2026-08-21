@@ -89,8 +89,18 @@ class AlanineDipeptide(Target):
 
     @eqx.filter_jit
     def energy(self, x: ArrayLike) -> Array:
+        """Reduced potential of a single configuration.
+
+        Args:
+            x: Reduced coordinates of one configuration, shape ``(x_dim,)``.
+
+        Returns:
+            The potential in units of :math:`k_B T`, as a scalar. The
+            DimeNet energy returns shape ``(1,)``; the trailing axis is
+            dropped so that ``vmap(energy)`` gives ``(num_samples,)``.
+        """
         r = self.map_x_to_r(x)
-        return self._energy_fn(r) / self.kT
+        return jnp.squeeze(self._energy_fn(r) / self.kT, axis=-1)
 
     def batched_energy(self, x: ArrayLike, batch_size: int = 100) -> Array:
         """Compute energies in batches."""
@@ -288,7 +298,7 @@ class AlanineDipeptide(Target):
 
         plot_rama([ref_dihedral_angles, dihedral_angles],
                   bins=bins,
-                  titles=['Predicted', 'Reference'],
+                  titles=['Reference', 'Predicted'],
                   save_name=save_name,
                   folder_name=folder_name and folder_name+ \
                                'dihedrals/')

@@ -15,7 +15,7 @@ from ecg.utils import Dimensions, init_optimizer, create_output_dirs
 
 jax.config.update('jax_enable_x64', True)
 
-folder_name = 'ALDP/'
+folder_name = 'ALDP_testing2/'
 print(folder_name or '')
 
 seed = 4

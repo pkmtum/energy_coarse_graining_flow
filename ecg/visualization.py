@@ -643,9 +643,11 @@ def plot_rama(list_angles: list[Array],
               save_name: str | None = None,
               folder_name: str | None = None,
               ):
-    """Plot 2D Ramachandran density histogram for alanine from the dihedral 
+    """Plot 2D Ramachandran density histogram for alanine from the dihedral
     angles.
-    
+
+    ``titles`` is positional: entry ``i`` names ``list_angles[i]``.
+
     Args:
     list_angles: list of angles in form of [N_samples x N_angles]."""
     if cmap is None:
@@ -655,12 +657,16 @@ def plot_rama(list_angles: list[Array],
     fig, axs = plt.subplots(ncols=n_plots, figsize=(6.4 * n_plots, 4.8),
                             constrained_layout=True)
 
+    # every panel is binned over the full circle.
+    hist_range = [[-180., 180.], [-180., 180.]]
+
     images = []
     for i in range(n_plots):
         mask = np.isfinite(list_angles[i]).all(axis=1)
         angles = list_angles[i][mask]
         h, x_edges, y_edges  = np.histogram2d(
-            angles[:, 0], angles[:, 1], bins=bins, density=True)
+            angles[:, 0], angles[:, 1], bins=bins, range=hist_range,
+            density=True)
         h_masked = np.where(h == 0, np.nan, h)
         x, y = np.meshgrid(x_edges, y_edges)
         images.append(axs[i].pcolormesh(x,y,h_masked.T, cmap=cmap))
@@ -697,8 +703,9 @@ def plot_1d_dihedrals(list_angles: list[Array],
     angles with mean and standard deviation.
 
     Args:
-    list_angles: list of angles in form of [N_samples x N_angles] with the 
-    first entry being the reference.
+    list_angles: list of angles in form of [N_samples x N_angles], paired
+    positionally with ``labels``, so the reference is first, but drawn last
+    on top.
     '''
 
     scale_x = 2.0
@@ -717,22 +724,27 @@ def plot_1d_dihedrals(list_angles: list[Array],
         linestyle = ['-', (0, (4, 3))]
 
     n_models = len(list_angles)
-    #put reference last in list_angles
-    list_angles.append(list_angles.pop(0))
+    # put the reference last, in a copy
+    ordered = list(list_angles[1:]) + [list_angles[0]]
+
+    # both angles are binned over the full circle.
+    hist_range = (-180., 180.)
+    edges = np.linspace(*hist_range, bins + 1)
+    bin_center = edges[:-1] + (edges[1] - edges[0]) / 2
 
     for i in range(n_models):
 
-        angles_phi = list_angles[i][:, 0]
-        angles_psi = list_angles[i][:, 1]
+        angles_phi = ordered[i][:, 0]
+        angles_psi = ordered[i][:, 1]
 
-        h_phi, x_bins  = jnp.histogram(angles_phi, bins=bins, density=True)
-        h_psi, _  = jnp.histogram(angles_psi, bins=bins, density=True)
-        width = x_bins[1]-x_bins[0]
-        bin_center = x_bins + width/2
+        h_phi, _  = jnp.histogram(angles_phi, bins=bins, range=hist_range,
+                                  density=True)
+        h_psi, _  = jnp.histogram(angles_psi, bins=bins, range=hist_range,
+                                  density=True)
 
-        ax1.plot(bin_center[:-1], h_phi, label=labels[i], color=colors[i],
+        ax1.plot(bin_center, h_phi, label=labels[i], color=colors[i],
                                         linestyle=linestyle[i], linewidth=2.0)
-        ax2.plot(bin_center[:-1], h_psi, label=labels[i], color=colors[i],
+        ax2.plot(bin_center, h_psi, label=labels[i], color=colors[i],
                                         linestyle=linestyle[i], linewidth=2.0)
 
     ax1.set_xlabel(r'$\phi$ in $\mathrm{deg}$', fontsize=fontsize)
