@@ -148,10 +148,17 @@ class AlanineDipeptide(Target):
                    x: ArrayLike,
                    ref: ArrayLike,
                    fraction: float = 0.1) -> Float:
-        """Compute bond fraction within a given fraction of the reference to 
-        get the bond score from https://github.com/Ferg-Lab/DiAMoNDBack."""
+        """Compute bond fraction within a given fraction of the reference to
+        get the bond score from https://github.com/Ferg-Lab/DiAMoNDBack.
+
+        The comparison is elementwise, so both sets are truncated to their
+        common length first.
+        """
         bonds = self.bonds(x)
         ref_bonds = self.bonds(ref)
+
+        num = min(bonds.shape[0], ref_bonds.shape[0])
+        bonds, ref_bonds = bonds[:num], ref_bonds[:num]
 
         bond_frac = jnp.sum((bonds < (1+fraction)*ref_bonds) &
                         (bonds > (1-fraction)*ref_bonds))
